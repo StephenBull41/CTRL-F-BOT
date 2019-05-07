@@ -58,11 +58,6 @@ while($cont_loop -eq "true"){
                             $term_ln = $term_ln.Remove($term.Length)
 
                         }
-                        
-                        #Write-Host "Debug: line k = " $file_lines[$K] -BackgroundColor Black -ForegroundColor DarkYellow
-                        #Write-Host "Debug: pre_ln = " $pre_ln -BackgroundColor Black -ForegroundColor DarkYellow
-                        #Write-Host "Debug: term_ln = " $term_ln -BackgroundColor Black -ForegroundColor DarkYellow
-                        #Write-Host "Debug: post_ln = " $post_ln -BackgroundColor Black -ForegroundColor DarkYellow
 
                         Write-Host $pre_ln -NoNewline -ForegroundColor Cyan
                         Write-Host $term_ln -NoNewline -ForegroundColor Cyan -BackgroundColor DarkGray
