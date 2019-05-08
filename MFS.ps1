@@ -20,12 +20,22 @@ while($cont_loop -eq "true"){
         Write-Host "Starting file: " -NoNewline
         Write-Host $file -ForegroundColor Magenta
         write-host "──────────────────────────" -Foregroundcolor Green
-        $file_lines = [IO.File]::ReadAllLines($file)
+
+        try{$file_lines = [IO.File]::ReadAllLines($file)}catch [System.IO.IOException]{
+            #File is in use, make a copy & read the copy
+            Copy-Item $file -Destination "C:\temp\"
+            $filename = "C:\temp\" + $file.Remove(0, $file.LastIndexOf('\') + 1)
+            $file_lines = [IO.File]::ReadAllLines($filename)
+            Remove-Item -Path $filename
+        }
 
         foreach($line in $file_lines){
 
             if(($line.ToUpper() -eq $term.ToUpper()) -or ($line.ToUpper().Contains($term.ToUpper()))){
-            
+                #if a match if found at the beginning of the file the offset min might cause the script to try read from a negative index
+                #$l is used to make sure the minimum index is always at least 0 
+                #$k is the index offset from $i to be written to host
+                
                 $k = $i - $offset_min
                 $l = 0;
                 if($k -lt 0){
